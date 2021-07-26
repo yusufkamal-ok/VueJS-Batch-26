@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <form>
+            <input type="text" v-model="message" ref="userName">
+            <input type="submit" @click.prevent="add_name" v-if="a"  value="add">
+            <input type="submit" @click.prevent="update_name(n)" v-else  value="Update">
+        </form>
+        <ul>
+            <li v-for="(user,i) in users" >
+                <p> {{user.name}}
+                <input type="button" @click.prevent ="edit_name(i)" value="Edit">
+                ||
+                <input type="button" @click.prevent ="delete_name(i)" value="Delete">
+                </p>
+            </li>
+        </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+    var aja = new Vue({
+    el: '#app',
+    data: {
+        message:'',
+        a: true,
+        n: 0,
+        users:[     {name : 'Muhammad Iqbal Mubarok'},
+                    {name : 'Ruby Purwanti'},
+                    {name : 'Faqih Muhammad'}
+                ]
+    },
+    methods:{
+        add_name : function(){
+                    this.users.push({
+                    name : this.message
+                    })
+                    this.message = ''
+                },
+        delete_name : function (i){
+                    confirm("Anda yakin?")
+                    this.users.splice(i,1)
+                },
+        edit_name : function(i){
+                    this.a = false
+                    this.n = i
+                    this.message = this.users[i].name
+                },
+        update_name : function(i){
+                    this.users[i].name = this.message
+                    this.message = ''
+                    this.a = true
+                }
+    }
+})
+    </script>
+</body>
+</html>
